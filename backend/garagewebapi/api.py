@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 import time
@@ -20,8 +21,8 @@ def doors():
                 garagedoor = post_data.get('door')
                 garagecode = post_data.get('garagecode')
                 pin = 0
-
-                if garagecode == 12345678:
+                
+                if garagecode == int(os.environ.get('GARAGECODE', 12345678)):
                         if garagedoor == 1:
                                 pin = 7
                         elif garagedoor == 2:
