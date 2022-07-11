@@ -14,67 +14,45 @@
   </v-container>
   <v-container>
     <v-row>
-      <v-col v-for="(card, index) in cards" :key="index" :cols="card.flex">
+      <v-col
+        v-for="(doorstate, index) in doors"
+        :key="index"
+        :cols="cards[index].flex"
+      >
         <v-card>
-          <v-card-title class="text-center">{{ card.title }}</v-card-title>
+          <v-card-title class="text-center">{{
+            cards[index].title
+          }}</v-card-title>
           <v-img
+            v-if="doorstate == 0"
             :src="garagequestion"
             @click="controlDoor(index)"
             alt="Opening/Closing"
           />
-        </v-card>
-        <!-- <v-img
-          v-else-if="doors[index].doorstate == 1"
-          src="../assets/GarageGreen.gif"
-          @click="controlDoor(index)"
-          alt="Close"
-        />
-        <v-img
-          v-else-if="doors[index].doorstate == 2"
-          src="../assets/GarageRed.gif"
-          @click="controlDoor(index)"
-          alt="Open"
-        /> -->
-      </v-col>
-    </v-row>
-  </v-container>
-  <div class="row">
-    <div class="col" v-for="(doorstate, index) in doors" :key="index">
-      <div class="card text-center">
-        <div v-if="index == 0" class="card-header">Christy's Door</div>
-        <div v-else-if="index == 1" class="card-header">Gary's Door</div>
-        <div class="card-body text-center">
-          <img
-            v-if="doorstate == 0"
-            src="../assets/GarageQuestion.gif"
-            class="card-img"
-            @click="controlDoor(index)"
-            alt="Opening/Closing"
-          />
-          <img
+          <v-img
             v-else-if="doorstate == 1"
-            src="../assets/GarageGreen.gif"
-            class="card-img"
+            :src="garageopen"
             @click="controlDoor(index)"
             alt="Close"
           />
-          <img
+          <v-img
             v-else-if="doorstate == 2"
-            src="../assets/GarageRed.gif"
-            class="card-img"
+            :src="garageclosed"
             @click="controlDoor(index)"
             alt="Open"
           />
-        </div>
-      </div>
-    </div>
-  </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import axios from "axios";
 
 import garagequestion from "../assets/GarageQuestion.gif";
+import garageopen from "../assets/GarageGreen.gif";
+import garageclosed from "../assets/GarageRed.gif";
 
 const API_BASE_URL = "http://10.0.0.221:5000/api/";
 
@@ -99,6 +77,8 @@ export default {
         { title: "Gary's Door", flex: 6 },
       ],
       garagequestion,
+      garageopen,
+      garageclosed,
     };
   },
   created() {

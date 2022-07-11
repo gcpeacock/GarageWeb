@@ -18,20 +18,12 @@ export default {
       group: null,
       items: [
         {
-          title: "Foo",
-          value: "foo",
+          title: "Home",
+          value: "home",
         },
         {
-          title: "Bar",
-          value: "bar",
-        },
-        {
-          title: "Fizz",
-          value: "fizz",
-        },
-        {
-          title: "Buzz",
-          value: "buzz",
+          title: "Log",
+          value: "log",
         },
       ],
     };
