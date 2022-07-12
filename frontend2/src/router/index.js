@@ -8,11 +8,15 @@ const routes = [
   {
     path: "/",
     name: "home",
+    title: "Home",
+    icon: "mdi-view-dashboard",
     component: HomeView,
   },
   {
     path: "/about",
     name: "about",
+    title: "About",
+    icon: "mdi-cog",
     component: About,
   },
 ];
