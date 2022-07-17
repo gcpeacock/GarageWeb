@@ -4,11 +4,14 @@
     </v-app-bar-nav-icon>
     <v-toolbar-title>Peacock's Garage Monitor</v-toolbar-title>
     <v-navigation-drawer v-model="drawer" bottom temporary>
-      <v-list v-for="route in router.routes" :key="route.title">
+      <v-list>
         <v-list-item
-          prepend-icon="{{ route.icon }}"
-          title="{{ route.title }}"
-          @click="navigateTo(route.path)"
+          v-for="item in items"
+          :key="item.title"
+          link
+          :to="item.path"
+          :prepend-icon="item.icon"
+          :title="item.title"
         >
         </v-list-item>
       </v-list>
@@ -17,7 +20,7 @@
 </template>
 
 <script>
-import router from "../router";
+import logo from "../assets/logo.svg";
 
 export default {
   name: "MainHeader",
@@ -25,15 +28,17 @@ export default {
     return {
       drawer: false,
       group: null,
-      router,
+      logo,
       items: [
         {
           title: "Home",
-          value: "home",
+          icon: "mdi-garage",
+          path: "/",
         },
         {
           title: "Log",
-          value: "log",
+          icon: "mdi-file-document",
+          path: "/log",
         },
       ],
     };

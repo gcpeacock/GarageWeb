@@ -1,23 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-// import LogView from "../views/LogView.vue";
-
-const About = { template: "<div>About</div>" };
+import LogView from "../views/LogView.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    title: "Home",
-    icon: "mdi-view-dashboard",
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    title: "About",
-    icon: "mdi-cog",
-    component: About,
+    path: "/Log",
+    name: "log",
+    component: LogView,
   },
 ];
 
