@@ -1,15 +1,16 @@
 <template>
   <div class="logdata">
-    <pre>{{ logtext }}</pre>
+    <pre>{{logtext}}</pre>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import axios from "axios";
 
-const API_BASE_URL = "http://10.0.0.221:5000/api";
+const API_BASE_URL = "http://10.0.0.221:5000/api"
 
-export default {
+export default defineComponent({
   data() {
     return {
       logtext: "",
@@ -31,5 +32,15 @@ export default {
         });
     },
   },
-};
+});
 </script>
+
+<style scoped>
+.inputcode {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+</style>

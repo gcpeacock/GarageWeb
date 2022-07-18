@@ -1,26 +1,26 @@
-<script setup lang="ts">
-import { RouterView, RouterLink } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
-import NavBar from "@/components/NavBar.vue";
-</script>
-
 <template>
-  <div>
-    <NavBar/>
-  </div>
-  <div class="wrapper">
-    <HelloWorld msg="Peacock's" />
-  </div>
-
-  <RouterView />
+  <v-app>
+    <v-main>
+      <MainHeader />
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-html {
-  background-color: aliceblue;
-}
+<script>
+import MainHeader from "./components/MainHeader.vue";
+import { RouterView } from "vue-router";
 
-#app {
-  background-color: aliceblue;
-}
-</style>
+export default {
+  name: "App",
+
+  components: {
+    MainHeader,
+    RouterView,
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>

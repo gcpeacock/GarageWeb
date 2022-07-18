@@ -1,84 +1,56 @@
 <template>
-  <v-container>
-    <v-text-field
-      v-model="doorcode"
-      :append-icon="showcode ? 'mdi-eye' : 'mdi-eye-off'"
+  <div class="inputcode">
+    <input
+      v-model.number.trim="doorcode"
+      class="doorcode"
       placeholder="Enter door code."
-      :rules="[rules.required, rules.numeric, rules.min]"
-      :type="showcode ? 'text' : 'password'"
-      hide-details="auto"
-      clearable
-      density="compact"
-      @click:append="showcode = !showcode"
-    ></v-text-field>
-  </v-container>
-  <v-container>
-    <v-row>
-      <v-col
-        v-for="(doorstate, index) in doors"
-        :key="index"
-        :cols="cards[index].flex"
-      >
-        <v-card>
-          <v-card-title class="text-center">{{
-            cards[index].title
-          }}</v-card-title>
-          <v-img
+    />
+  </div>
+  <div class="row">
+    <div class="col" v-for="(doorstate, index) in doors" :key="index">
+      <div class="card text-center">
+        <div v-if="index == 0" class="card-header">Christy's Door</div>
+        <div v-else-if="index == 1" class="card-header">Gary's Door</div>
+        <div class="card-body text-center">
+          <img
             v-if="doorstate == 0"
-            :src="garagequestion"
+            src="../assets/GarageQuestion.gif"
+            class="card-img"
             @click="controlDoor(index)"
             alt="Opening/Closing"
           />
-          <v-img
+          <img
             v-else-if="doorstate == 1"
-            :src="garageopen"
+            src="../assets/GarageGreen.gif"
+            class="card-img"
             @click="controlDoor(index)"
             alt="Close"
           />
-          <v-img
+          <img
             v-else-if="doorstate == 2"
-            :src="garageclosed"
+            src="../assets/GarageRed.gif"
+            class="card-img"
             @click="controlDoor(index)"
             alt="Open"
           />
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import axios from "axios";
 
-import garagequestion from "../assets/GarageQuestion.gif";
-import garageopen from "../assets/GarageGreen.gif";
-import garageclosed from "../assets/GarageRed.gif";
+const API_BASE_URL = "http://10.0.0.221:5000/api/"
 
-const API_BASE_URL = "http://10.0.0.221:5000/api/";
-
-export default {
-  name: "DoorsControl",
+export default defineComponent({
   data() {
     return {
-      showcode: false,
       doors: [],
       doorcode: "",
       timer: 0,
-      rules: {
-        required: (value) => !!value || "Required.",
-        min: (value) => (value || "").length <= 8 || "Max 8 characters",
-        numeric: (value) => {
-          const pattern = /^[0-9]+$/;
-          return pattern.test(value) || "Numbers only.";
-        },
-      },
-      cards: [
-        { title: "Christy's Door", flex: 6 },
-        { title: "Gary's Door", flex: 6 },
-      ],
-      garagequestion,
-      garageopen,
-      garageclosed,
     };
   },
   created() {
@@ -109,7 +81,7 @@ export default {
         });
       this.updatePollFrequency();
     },
-    controlDoor(index) {
+    controlDoor(index: number) {
       let whichdoor = ++index;
       const payload = { door: whichdoor, garagecode: this.doorcode };
 
@@ -119,17 +91,15 @@ export default {
         })
         .then((res) => {
           if (res.status != 200) {
-            this.doorcode = "";
+            this.doorcode = "Invalid Request";
           }
-          this.doorcode = "";
           this.doors = res.data.doorstates;
           this.updatePollFrequency();
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
-          this.doorcode = "";
-          this.isVisible = true;
+          this.doorcode = "Invalid Request";
           this.getDoorsStatus();
         });
     },
@@ -140,7 +110,7 @@ export default {
   unmounted() {
     this.cancelAutoUpdate();
   },
-};
+});
 </script>
 
 <style scoped>
@@ -153,5 +123,27 @@ export default {
 
 input {
   text-align: center;
+}
+.col {
+  /* font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  /* line-height: 1.4em; */
+  /* background: #f5f5f5; */
+  /* color: #111111; */
+  /* min-width: 230px; */
+  /* max-width: 550px; */
+  /* margin: 0 auto; */
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
+  /* font-weight: 300; */
+}
+.special-card {
+  /* create a custom class so you 
+   do not run into specificity issues 
+   against bootstraps styles
+   which tends to work better than using !important 
+   (future you will thank you later)*/
+
+  background-color: rgba(245, 245, 245, 1);
+  opacity: 0.4;
 }
 </style>

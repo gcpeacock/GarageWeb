@@ -1,9 +1,20 @@
-<script setup lang="ts">
-import DoorsControl from "../components/DoorsControl.vue";
-</script>
-
 <template>
   <main>
     <DoorsControl />
   </main>
 </template>
+
+<script>
+import DoorsControl from "../components/DoorsControl.vue";
+
+export default {
+  name: "HomeView",
+
+  components: {
+    DoorsControl,
+  },
+  data: () => ({
+    //
+  }),
+};
+</script>
