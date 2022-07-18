@@ -1,16 +1,17 @@
 <template>
   <v-container>
-    <v-text-field
-      v-model="doorcode"
-      :append-icon="showcode ? 'mdi-eye' : 'mdi-eye-off'"
-      placeholder="Enter door code."
-      :rules="[rules.required, rules.numeric, rules.min]"
-      :type="showcode ? 'text' : 'password'"
-      hide-details="auto"
-      clearable
-      density="compact"
-      @click:append="showcode = !showcode"
-    ></v-text-field>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-text-field
+        v-model="doorcode"
+        :append-icon="showcode ? 'mdi-eye' : 'mdi-eye-off'"
+        placeholder="Enter door code."
+        :rules="[rules.required, rules.numeric]"
+        :type="showcode ? 'text' : 'password'"
+        hide-details="auto"
+        clearable
+        @click:append="showcode = !showcode"
+      ></v-text-field>
+    </v-form>
   </v-container>
   <v-container>
     <v-row>
@@ -119,22 +120,24 @@ export default {
         })
         .then((res) => {
           if (res.status != 200) {
-            this.doorcode = "";
+            this.resetInput();
           }
-          this.doorcode = "";
           this.doors = res.data.doorstates;
           this.updatePollFrequency();
+          this.resetInput();
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
-          this.doorcode = "";
-          this.isVisible = true;
           this.getDoorsStatus();
+          this.resetInput();
         });
     },
     cancelAutoUpdate() {
       clearInterval(this.timer);
+    },
+    resetInput() {
+      this.$refs.form.reset();
     },
   },
   unmounted() {
