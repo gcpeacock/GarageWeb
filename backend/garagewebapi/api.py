@@ -19,7 +19,7 @@ def doors():
         if request.method == 'POST':
                 post_data = json.loads(json.dumps(request.get_json()))
                 garagedoor = post_data.get('door')
-                garagecode = post_data.get('garagecode')
+                garagecode = int(post_data.get('garagecode'))
                 pin = 0
                 
                 if garagecode == int(os.environ.get('GARAGECODE', 12345678)):
